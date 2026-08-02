@@ -1,9 +1,9 @@
-
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 import '../models/invoice_model.dart';
+import '../models/invoice_item_model.dart';
 
 
 
@@ -14,6 +14,8 @@ class PdfService {
 Future<void> generateInvoicePdf(
 
 InvoiceModel invoice,
+
+List<InvoiceItemModel> items,
 
 ) async {
 
@@ -29,12 +31,10 @@ pdf.addPage(
 
 pw.Page(
 
-pageFormat:
-PdfPageFormat.a4,
+pageFormat: PdfPageFormat.a4,
 
 
 build:(context){
-
 
 
 return pw.Column(
@@ -44,10 +44,13 @@ crossAxisAlignment:
 pw.CrossAxisAlignment.start,
 
 
-
 children:[
 
 
+
+pw.Center(
+
+child:
 
 pw.Text(
 
@@ -57,7 +60,7 @@ style:
 
 pw.TextStyle(
 
-fontSize:24,
+fontSize:28,
 
 fontWeight:
 pw.FontWeight.bold,
@@ -66,25 +69,29 @@ pw.FontWeight.bold,
 
 ),
 
-
-
-pw.SizedBox(
-
-height:20,
-
 ),
 
 
 
+pw.SizedBox(height:10),
+
+
+
+pw.Center(
+
+child:
+
 pw.Text(
 
-"فاتورة بيع",
+"فاتورة مبيعات",
 
 style:
 
 const pw.TextStyle(
 
-fontSize:18,
+fontSize:20,
+
+),
 
 ),
 
@@ -93,6 +100,7 @@ fontSize:18,
 
 
 pw.Divider(),
+
 
 
 
@@ -112,17 +120,71 @@ pw.Text(
 
 
 
-pw.SizedBox(
+pw.SizedBox(height:20),
 
-height:15,
+
+
+
+
+pw.Table.fromTextArray(
+
+
+headers:[
+
+"المنتج",
+
+"السعر",
+
+"الكمية",
+
+"الإجمالي",
+
+],
+
+
+
+data:
+
+items.map((item)=>[
+
+item.productName,
+
+item.price.toString(),
+
+item.quantity.toString(),
+
+item.total.toString(),
+
+]).toList(),
+
+
 
 ),
+
+
+
+
+
+pw.SizedBox(height:20),
+
+
 
 
 
 pw.Text(
 
 "الإجمالي: ${invoice.total}",
+
+style:
+
+pw.TextStyle(
+
+fontSize:16,
+
+fontWeight:
+pw.FontWeight.bold,
+
+),
 
 ),
 
@@ -136,6 +198,7 @@ pw.Text(
 
 
 
+
 pw.Text(
 
 "المتبقي: ${invoice.remaining}",
@@ -144,12 +207,35 @@ pw.Text(
 
 
 
+
+pw.Divider(),
+
+
+
+
+
+pw.Center(
+
+child:
+
+pw.Text(
+
+"شكرًا لتعاملكم معنا",
+
+),
+
+),
+
+
+
 ],
+
 
 );
 
 
-}
+},
+
 
 ),
 

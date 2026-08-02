@@ -2,334 +2,195 @@ import 'package:flutter/material.dart';
 
 import '../../models/invoice_model.dart';
 import '../../services/invoice_service.dart';
+import '../../services/pdf_service.dart';
 
 
 
-class InvoicesScreen extends StatefulWidget{
+class InvoicesScreen extends StatefulWidget {
+
+  const InvoicesScreen({super.key});
 
 
-const InvoicesScreen({super.key});
-
-
-@override
-State<InvoicesScreen> createState()
-=> _InvoicesScreenState();
-
+  @override
+  State<InvoicesScreen> createState() =>
+      _InvoicesScreenState();
 
 }
+
 
 
 
 class _InvoicesScreenState
-extends State<InvoicesScreen>{
+    extends State<InvoicesScreen> {
 
 
+  final service =
+  InvoiceService();
 
-final service =
-InvoiceService();
 
+  final pdfService =
+  PdfService();
 
 
-List<InvoiceModel> invoices=[];
 
+  List<InvoiceModel> invoices = [];
 
 
-final customer =
-TextEditingController();
 
 
-final total =
-TextEditingController();
 
+  @override
+  void initState(){
 
-final paid =
-TextEditingController();
+    super.initState();
 
+    loadInvoices();
 
+  }
 
 
 
-@override
-void initState(){
 
-super.initState();
 
-load();
+  void loadInvoices() async{
 
-}
 
+    invoices =
+    await service.getInvoices();
 
 
+    setState((){});
 
-void load() async{
 
+  }
 
-invoices =
-await service.getInvoices();
 
 
-setState((){});
 
 
-}
 
 
+  @override
+  Widget build(BuildContext context){
 
 
+    return Scaffold(
 
-void addInvoice() async{
 
+      appBar:
 
-double t =
-double.parse(total.text);
+      AppBar(
 
+        title:
+        const Text("الفواتير"),
 
-double p =
-double.parse(paid.text);
+      ),
 
 
 
-await service.addInvoice(
 
-InvoiceModel(
 
-customer:customer.text,
+      body:
 
-total:t,
+      ListView.builder(
 
-paid:p,
 
-remaining:t-p,
+        itemCount:
+        invoices.length,
 
-date:
-DateTime.now()
-.toString(),
 
-)
 
-);
+        itemBuilder:(context,index){
 
 
+          final invoice =
+          invoices[index];
 
-load();
 
 
-customer.clear();
+          return Card(
 
-total.clear();
 
-paid.clear();
+            child:
 
+            ListTile(
 
-}
 
 
+              title:
 
+              Text(
 
+                invoice.customer,
 
-void dialog(){
+              ),
 
 
-showDialog(
 
-context:context,
 
-builder:(context){
+              subtitle:
 
+              Text(
 
-return AlertDialog(
+                "الإجمالي: ${invoice.total}\n"
+                    "المتبقي: ${invoice.remaining}",
 
+              ),
 
-title:
-const Text("فاتورة جديدة"),
 
 
-content:
 
-Column(
 
-mainAxisSize:
-MainAxisSize.min,
+              trailing:
 
+              IconButton(
 
-children:[
 
+                icon:
 
-TextField(
+                const Icon(
 
-controller:customer,
+                  Icons.picture_as_pdf,
 
-decoration:
-const InputDecoration(
+                ),
 
-labelText:"العميل"
 
-),
 
-),
 
+                onPressed:() async {
 
 
-TextField(
 
-controller:total,
+                  await pdfService.generateInvoicePdf(
 
-keyboardType:
-TextInputType.number,
+                    invoice,
 
-decoration:
-const InputDecoration(
+                  );
 
-labelText:"الإجمالي"
 
-),
 
-),
+                },
 
+              ),
 
 
-TextField(
 
-controller:paid,
+            ),
 
-keyboardType:
-TextInputType.number,
 
-decoration:
-const InputDecoration(
+          );
 
-labelText:"المدفوع"
 
-),
+        },
 
-),
 
+      ),
 
-],
 
+    );
 
-),
 
-
-
-actions:[
-
-
-ElevatedButton(
-
-onPressed:(){
-
-addInvoice();
-
-Navigator.pop(context);
-
-},
-
-child:
-const Text("حفظ")
-
-)
-
-
-],
-
-
-
-);
-
-
-}
-
-
-);
-
-
-}
-
-
-
-
-
-@override
-Widget build(BuildContext context){
-
-
-return Scaffold(
-
-
-appBar:
-
-AppBar(
-
-title:
-const Text("الفواتير")
-
-),
-
-
-
-floatingActionButton:
-
-FloatingActionButton(
-
-onPressed:dialog,
-
-child:
-const Icon(Icons.add),
-
-),
-
-
-
-body:
-
-ListView.builder(
-
-itemCount:
-invoices.length,
-
-
-itemBuilder:(context,index){
-
-
-final i =
-invoices[index];
-
-
-return Card(
-
-child:
-
-ListTile(
-
-title:
-Text(i.customer),
-
-
-subtitle:
-
-Text(
-
-"الإجمالي: ${i.total}\nالمتبقي: ${i.remaining}"
-
-),
-
-
-),
-
-);
-
-
-},
-
-
-),
-
-
-);
-
-
-}
+  }
 
 
 }

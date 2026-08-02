@@ -1,49 +1,62 @@
-
-class InvoiceModel {
-
-
-  int? id;
+class InvoiceModel{
 
 
-  String customer;
+int? id;
 
 
-  double total;
+String customer;
 
 
-  String date;
+double total;
 
 
+double paid;
 
-  InvoiceModel({
 
-    this.id,
+double remaining;
 
-    required this.customer,
 
-    required this.total,
-
-    required this.date,
-
-  });
+String date;
 
 
 
-  Map<String,dynamic> toMap(){
+InvoiceModel({
 
-    return {
+this.id,
 
-      "id":id,
+required this.customer,
 
-      "customer":customer,
+required this.total,
 
-      "total":total,
+required this.paid,
 
-      "date":date,
+required this.remaining,
 
-    };
+required this.date,
 
-  }
+});
+
+
+
+Map<String,dynamic> toMap(){
+
+return{
+
+"id":id,
+
+"customer":customer,
+
+"total":total,
+
+"paid":paid,
+
+"remaining":remaining,
+
+"date":date,
+
+};
+
+}
 
 
 }

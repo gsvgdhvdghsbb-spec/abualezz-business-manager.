@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 
+
 class DatabaseHelper {
 
 
@@ -11,14 +12,19 @@ class DatabaseHelper {
 
   Future<Database> get database async {
 
+
     if (_database != null) {
+
       return _database!;
+
     }
 
 
     _database = await initDatabase();
 
+
     return _database!;
+
 
   }
 
@@ -41,9 +47,11 @@ class DatabaseHelper {
 
     return await openDatabase(
 
+
       path,
 
-      version: 2,
+
+      version: 3,
 
 
 
@@ -66,6 +74,7 @@ class DatabaseHelper {
         )
 
         ''');
+
 
 
 
@@ -114,6 +123,32 @@ class DatabaseHelper {
 
 
 
+
+        await db.execute('''
+
+        CREATE TABLE invoice_items(
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        invoiceId INTEGER,
+
+        productName TEXT,
+
+        price REAL,
+
+        quantity INTEGER,
+
+        total REAL
+
+        )
+
+        ''');
+
+
+
+
+
+
         await db.execute('''
 
         CREATE TABLE expenses(
@@ -129,6 +164,7 @@ class DatabaseHelper {
         )
 
         ''');
+
 
 
 
@@ -158,10 +194,12 @@ class DatabaseHelper {
 
       },
 
+
     );
 
 
   }
+
 
 
 }

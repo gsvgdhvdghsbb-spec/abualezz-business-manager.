@@ -1,89 +1,131 @@
 import 'package:flutter/material.dart';
+
 import '../customers/customers_screen.dart';
+import '../products/products_screen.dart';
 import '../suppliers/suppliers_screen.dart';
 import '../invoices/invoices_screen.dart';
 
 
+
 class DashboardScreen extends StatelessWidget {
 
+
 const DashboardScreen({super.key});
+
 
 
 @override
 Widget build(BuildContext context){
 
+
 return Scaffold(
 
-appBar: AppBar(
 
-title: const Text(
-"محاسبة أبو العز"
-),
+appBar:AppBar(
+
+title:
+const Text("محاسبة أبو العز"),
 
 centerTitle:true,
 
 ),
 
 
-body: GridView.count(
 
-padding: const EdgeInsets.all(20),
+body:
+
+GridView.count(
+
+padding:
+const EdgeInsets.all(20),
 
 crossAxisCount:2,
-
-crossAxisSpacing:15,
-
-mainAxisSpacing:15,
 
 
 children:[
 
 
-menuCard(
+
+card(
+
 context,
+
 "العملاء",
+
 Icons.people,
+
 const CustomersScreen()
+
 ),
 
 
-menuCard(
+
+card(
+
 context,
-"الموردون",
-Icons.store,
-const SuppliersScreen()
-),
 
+"المستودع",
 
-menuCard(
-context,
-"الفواتير",
-Icons.receipt,
-const InvoicesScreen()
-),
-
-
-menuCard(
-context,
-"المخزون",
 Icons.inventory,
-Container()
+
+const ProductsScreen()
+
 ),
 
 
-menuCard(
+
+card(
+
 context,
+
+"الفواتير",
+
+Icons.receipt,
+
+const InvoicesScreen()
+
+),
+
+
+
+card(
+
+context,
+
+"الموردون",
+
+Icons.store,
+
+const SuppliersScreen()
+
+),
+
+
+
+card(
+
+context,
+
 "الديون",
+
 Icons.money,
+
 Container()
+
 ),
 
 
-menuCard(
+
+card(
+
 context,
+
 "التقارير",
+
 Icons.bar_chart,
+
 Container()
+
 ),
 
 
@@ -101,16 +143,25 @@ Container()
 
 
 
-Widget menuCard(
+
+
+Widget card(
+
 BuildContext context,
+
 String title,
+
 IconData icon,
+
 Widget page
+
 ){
+
 
 return InkWell(
 
 onTap:(){
+
 
 Navigator.push(
 
@@ -124,12 +175,15 @@ builder:(context)=>page
 
 );
 
+
 },
 
 
-child: Card(
+child:Card(
 
-elevation:5,
+margin:
+const EdgeInsets.all(8),
+
 
 child:Column(
 
@@ -141,9 +195,13 @@ children:[
 
 
 Icon(
+
 icon,
+
 size:50,
+
 color:Colors.blue,
+
 ),
 
 
@@ -154,11 +212,13 @@ Text(
 
 title,
 
-style:const TextStyle(
+style:
+const TextStyle(
 
 fontSize:18,
 
-fontWeight:FontWeight.bold
+fontWeight:
+FontWeight.bold
 
 ),
 
@@ -172,6 +232,7 @@ fontWeight:FontWeight.bold
 
 
 ),
+
 
 );
 

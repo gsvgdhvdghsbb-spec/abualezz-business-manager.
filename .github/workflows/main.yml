@@ -24,11 +24,15 @@ jobs:
       with:
         channel: 'stable'
 
+    - name: Re-create Android Folder if missing
+      run: |
+        flutter create . --platforms=android --org=com.abualezz.app
+
     - name: Get Dependencies
       run: flutter pub get
 
     - name: Build APK
-      run: flutter build apk --release
+      run: flutter build apk --release --no-tree-shake-icons
 
     - name: Upload APK
       uses: actions/upload-artifact@v4

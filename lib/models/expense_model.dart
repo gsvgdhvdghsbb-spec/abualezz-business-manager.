@@ -10,6 +10,7 @@ double amount;
 String date;
 
 
+
 ExpenseModel({
 
 this.id,
@@ -23,9 +24,10 @@ required this.date,
 });
 
 
+
 Map<String,dynamic> toMap(){
 
-return{
+return {
 
 "id":id,
 
@@ -36,6 +38,27 @@ return{
 "date":date,
 
 };
+
+}
+
+
+
+
+factory ExpenseModel.fromMap(
+Map<String,dynamic> map){
+
+return ExpenseModel(
+
+id:map["id"],
+
+title:map["title"],
+
+amount:map["amount"],
+
+date:map["date"],
+
+);
+
 
 }
 

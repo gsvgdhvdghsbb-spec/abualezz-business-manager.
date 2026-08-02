@@ -7,6 +7,7 @@ import '../invoices/invoices_screen.dart';
 import '../expenses/expenses_screen.dart';
 import '../reports/reports_screen.dart';
 import '../settings/settings_screen.dart';
+import '../debts/debts_screen.dart';
 
 
 
@@ -85,7 +86,7 @@ class DashboardScreen extends StatelessWidget {
             context,
             "الديون",
             Icons.money,
-            Container(),
+            const DebtsScreen(),
           ),
 
 
@@ -143,7 +144,6 @@ class DashboardScreen extends StatelessWidget {
 
     return InkWell(
 
-
       onTap: () {
 
 
@@ -170,7 +170,8 @@ class DashboardScreen extends StatelessWidget {
 
         shape: RoundedRectangleBorder(
 
-          borderRadius: BorderRadius.circular(20),
+          borderRadius:
+          BorderRadius.circular(20),
 
         ),
 

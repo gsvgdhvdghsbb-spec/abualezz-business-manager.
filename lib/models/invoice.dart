@@ -3,18 +3,13 @@ class InvoiceModel{
 
 int? id;
 
-
 String customer;
-
 
 double total;
 
-
 double paid;
 
-
 double remaining;
-
 
 String date;
 
@@ -55,6 +50,31 @@ return{
 "date":date,
 
 };
+
+}
+
+
+
+
+factory InvoiceModel.fromMap(
+Map<String,dynamic> map){
+
+return InvoiceModel(
+
+id:map["id"],
+
+customer:map["customer"],
+
+total:map["total"],
+
+paid:map["paid"],
+
+remaining:map["remaining"],
+
+date:map["date"],
+
+);
+
 
 }
 

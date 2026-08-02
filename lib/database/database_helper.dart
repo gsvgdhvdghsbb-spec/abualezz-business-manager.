@@ -2,16 +2,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 
-
-class DatabaseHelper{
+class DatabaseHelper {
 
 
 static Database? _database;
 
 
 
-Future<Database> get database async{
-
+Future<Database> get database async {
 
 if(_database != null){
 
@@ -22,15 +20,13 @@ return _database!;
 
 _database = await initDatabase();
 
-
 return _database!;
-
 
 }
 
 
 
-Future<Database> initDatabase() async{
+Future<Database> initDatabase() async {
 
 
 String path = join(
@@ -49,7 +45,9 @@ path,
 
 version:1,
 
-onCreate:(db,version) async{
+
+onCreate:(db,version) async {
+
 
 
 await db.execute('''
@@ -70,6 +68,27 @@ debt REAL
 
 
 
+
+await db.execute('''
+
+CREATE TABLE products(
+
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+name TEXT,
+
+price REAL,
+
+quantity INTEGER
+
+)
+
+''');
+
+
+
+
+
 await db.execute('''
 
 CREATE TABLE invoices(
@@ -80,6 +99,10 @@ customer TEXT,
 
 total REAL,
 
+paid REAL,
+
+remaining REAL,
+
 date TEXT
 
 )
@@ -87,13 +110,34 @@ date TEXT
 ''');
 
 
+
+
+
+await db.execute('''
+
+CREATE TABLE expenses(
+
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+title TEXT,
+
+amount REAL,
+
+date TEXT
+
+)
+
+''');
+
+
+
 },
+
 
 );
 
 
 }
-
 
 
 }

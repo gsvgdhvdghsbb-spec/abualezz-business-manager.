@@ -4,240 +4,227 @@ import '../customers/customers_screen.dart';
 import '../products/products_screen.dart';
 import '../suppliers/suppliers_screen.dart';
 import '../invoices/invoices_screen.dart';
+import '../expenses/expenses_screen.dart';
+import '../reports/reports_screen.dart';
+import '../settings/settings_screen.dart';
 
 
 
 class DashboardScreen extends StatelessWidget {
 
+  const DashboardScreen({super.key});
 
-const DashboardScreen({super.key});
 
+  @override
+  Widget build(BuildContext context) {
 
+    return Scaffold(
 
-@override
-Widget build(BuildContext context){
+      appBar: AppBar(
 
+        title: const Text(
+          "محاسبة أبو العز",
+        ),
 
-return Scaffold(
+        centerTitle: true,
 
+      ),
 
-appBar:AppBar(
 
-title:
-const Text("محاسبة أبو العز"),
+      body: GridView.count(
 
-centerTitle:true,
+        padding: const EdgeInsets.all(20),
 
-),
+        crossAxisCount: 2,
 
+        crossAxisSpacing: 15,
 
+        mainAxisSpacing: 15,
 
-body:
 
-GridView.count(
+        children: [
 
-padding:
-const EdgeInsets.all(20),
 
-crossAxisCount:2,
+          dashboardCard(
+            context,
+            "العملاء",
+            Icons.people,
+            const CustomersScreen(),
+          ),
 
 
-children:[
 
+          dashboardCard(
+            context,
+            "المستودع",
+            Icons.inventory,
+            const ProductsScreen(),
+          ),
 
 
-card(
 
-context,
+          dashboardCard(
+            context,
+            "الفواتير",
+            Icons.receipt_long,
+            const InvoicesScreen(),
+          ),
 
-"العملاء",
 
-Icons.people,
 
-const CustomersScreen()
+          dashboardCard(
+            context,
+            "الموردون",
+            Icons.store,
+            const SuppliersScreen(),
+          ),
 
-),
 
 
+          dashboardCard(
+            context,
+            "الديون",
+            Icons.money,
+            Container(),
+          ),
 
-card(
 
-context,
 
-"المستودع",
+          dashboardCard(
+            context,
+            "المصروفات",
+            Icons.money_off,
+            const ExpensesScreen(),
+          ),
 
-Icons.inventory,
 
-const ProductsScreen()
 
-),
+          dashboardCard(
+            context,
+            "التقارير",
+            Icons.bar_chart,
+            const ReportsScreen(),
+          ),
 
 
 
-card(
+          dashboardCard(
+            context,
+            "الإعدادات",
+            Icons.settings,
+            const SettingsScreen(),
+          ),
 
-context,
 
-"الفواتير",
+        ],
 
-Icons.receipt,
+      ),
 
-const InvoicesScreen()
+    );
 
-),
+  }
 
 
 
-card(
 
-context,
 
-"الموردون",
+  Widget dashboardCard(
 
-Icons.store,
+      BuildContext context,
 
-const SuppliersScreen()
+      String title,
 
-),
+      IconData icon,
 
+      Widget page,
 
+      ) {
 
-card(
 
-context,
+    return InkWell(
 
-"الديون",
 
-Icons.money,
+      onTap: () {
 
-Container()
 
-),
+        Navigator.push(
 
+          context,
 
+          MaterialPageRoute(
 
-card(
+            builder: (context) => page,
 
-context,
+          ),
 
-"التقارير",
+        );
 
-Icons.bar_chart,
 
-Container()
+      },
 
-),
 
+      child: Card(
 
+        elevation: 5,
 
-],
 
+        shape: RoundedRectangleBorder(
 
-),
+          borderRadius: BorderRadius.circular(20),
 
+        ),
 
-);
 
 
-}
+        child: Column(
 
+          mainAxisAlignment:
+          MainAxisAlignment.center,
 
 
+          children: [
 
 
-Widget card(
+            Icon(
 
-BuildContext context,
+              icon,
 
-String title,
+              size: 50,
 
-IconData icon,
+              color: Colors.blue,
 
-Widget page
+            ),
 
-){
 
 
-return InkWell(
+            const SizedBox(height: 15),
 
-onTap:(){
 
 
-Navigator.push(
+            Text(
 
-context,
+              title,
 
-MaterialPageRoute(
+              style: const TextStyle(
 
-builder:(context)=>page
+                fontSize: 18,
 
-)
+                fontWeight: FontWeight.bold,
 
-);
+              ),
 
+            ),
 
-},
 
+          ],
 
-child:Card(
+        ),
 
-margin:
-const EdgeInsets.all(8),
+      ),
 
+    );
 
-child:Column(
-
-mainAxisAlignment:
-MainAxisAlignment.center,
-
-
-children:[
-
-
-Icon(
-
-icon,
-
-size:50,
-
-color:Colors.blue,
-
-),
-
-
-const SizedBox(height:10),
-
-
-Text(
-
-title,
-
-style:
-const TextStyle(
-
-fontSize:18,
-
-fontWeight:
-FontWeight.bold
-
-),
-
-)
-
-
-],
-
-
-),
-
-
-),
-
-
-);
-
-
-}
+  }
 
 
 }

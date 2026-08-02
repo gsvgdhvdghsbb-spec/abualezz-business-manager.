@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 
-
 class DatabaseHelper {
 
 
@@ -11,7 +10,6 @@ class DatabaseHelper {
 
 
   Future<Database> get database async {
-
 
     if (_database != null) {
 
@@ -25,8 +23,8 @@ class DatabaseHelper {
 
     return _database!;
 
-
   }
+
 
 
 
@@ -51,13 +49,15 @@ class DatabaseHelper {
       path,
 
 
-      version: 3,
+      version: 4,
 
 
 
       onCreate: (db, version) async {
 
 
+
+        // العملاء
 
         await db.execute('''
 
@@ -79,6 +79,9 @@ class DatabaseHelper {
 
 
 
+
+        // المنتجات
+
         await db.execute('''
 
         CREATE TABLE products(
@@ -98,6 +101,9 @@ class DatabaseHelper {
 
 
 
+
+
+        // الفواتير
 
         await db.execute('''
 
@@ -124,6 +130,8 @@ class DatabaseHelper {
 
 
 
+        // تفاصيل الفواتير
+
         await db.execute('''
 
         CREATE TABLE invoice_items(
@@ -149,6 +157,8 @@ class DatabaseHelper {
 
 
 
+        // المصروفات
+
         await db.execute('''
 
         CREATE TABLE expenses(
@@ -170,6 +180,8 @@ class DatabaseHelper {
 
 
 
+        // الديون
+
         await db.execute('''
 
         CREATE TABLE debts(
@@ -189,6 +201,52 @@ class DatabaseHelper {
         )
 
         ''');
+
+
+
+
+
+
+        // المستخدمون
+
+        await db.execute('''
+
+        CREATE TABLE users(
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        username TEXT,
+
+        password TEXT,
+
+        role TEXT
+
+        )
+
+        ''');
+
+
+
+
+
+
+        // إنشاء المدير الافتراضي
+
+        await db.insert(
+
+          "users",
+
+          {
+
+            "username": "admin",
+
+            "password": "123456",
+
+            "role": "مدير",
+
+          },
+
+        );
 
 
 

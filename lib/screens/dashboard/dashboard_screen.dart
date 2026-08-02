@@ -19,111 +19,280 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
     return Scaffold(
+
 
       appBar: AppBar(
 
-        title: const Text(
+        title:
+
+        const Text(
+
           "محاسبة أبو العز",
+
         ),
 
-        centerTitle: true,
+      ),
+
+
+
+
+      body:
+
+      SingleChildScrollView(
+
+
+        padding:
+
+        const EdgeInsets.all(16),
+
+
+
+        child:
+
+        Column(
+
+          crossAxisAlignment:
+
+          CrossAxisAlignment.start,
+
+
+
+          children:[
+
+
+
+            const Text(
+
+              "مرحباً بك 👋",
+
+              style:
+
+              TextStyle(
+
+                fontSize:24,
+
+                fontWeight:
+
+                FontWeight.bold,
+
+              ),
+
+            ),
+
+
+
+            const SizedBox(height:5),
+
+
+
+            const Text(
+
+              "إدارة أعمالك بسهولة",
+
+              style:
+
+              TextStyle(
+
+                color:Colors.grey,
+
+              ),
+
+            ),
+
+
+
+
+            const SizedBox(height:20),
+
+
+
+
+
+            GridView.count(
+
+              shrinkWrap:true,
+
+              physics:
+
+              const NeverScrollableScrollPhysics(),
+
+
+
+              crossAxisCount:2,
+
+
+              crossAxisSpacing:15,
+
+              mainAxisSpacing:15,
+
+
+
+              children:[
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "العملاء",
+
+                  Icons.people,
+
+                  Colors.blue,
+
+                  const CustomersScreen(),
+
+                ),
+
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "المستودع",
+
+                  Icons.inventory,
+
+                  Colors.orange,
+
+                  const ProductsScreen(),
+
+                ),
+
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "الفواتير",
+
+                  Icons.receipt_long,
+
+                  Colors.green,
+
+                  const InvoicesScreen(),
+
+                ),
+
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "الديون",
+
+                  Icons.money,
+
+                  Colors.red,
+
+                  const DebtsScreen(),
+
+                ),
+
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "الموردون",
+
+                  Icons.store,
+
+                  Colors.purple,
+
+                  const SuppliersScreen(),
+
+                ),
+
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "المصروفات",
+
+                  Icons.money_off,
+
+                  Colors.brown,
+
+                  const ExpensesScreen(),
+
+                ),
+
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "التقارير",
+
+                  Icons.bar_chart,
+
+                  Colors.teal,
+
+                  const ReportsScreen(),
+
+                ),
+
+
+
+
+                dashboardCard(
+
+                  context,
+
+                  "الإعدادات",
+
+                  Icons.settings,
+
+                  Colors.grey,
+
+                  const SettingsScreen(),
+
+                ),
+
+
+
+              ],
+
+
+
+            ),
+
+
+
+          ],
+
+
+
+        ),
+
+
 
       ),
 
 
-      body: GridView.count(
-
-        padding: const EdgeInsets.all(20),
-
-        crossAxisCount: 2,
-
-        crossAxisSpacing: 15,
-
-        mainAxisSpacing: 15,
-
-
-        children: [
-
-
-          dashboardCard(
-            context,
-            "العملاء",
-            Icons.people,
-            const CustomersScreen(),
-          ),
-
-
-
-          dashboardCard(
-            context,
-            "المستودع",
-            Icons.inventory,
-            const ProductsScreen(),
-          ),
-
-
-
-          dashboardCard(
-            context,
-            "الفواتير",
-            Icons.receipt_long,
-            const InvoicesScreen(),
-          ),
-
-
-
-          dashboardCard(
-            context,
-            "الموردون",
-            Icons.store,
-            const SuppliersScreen(),
-          ),
-
-
-
-          dashboardCard(
-            context,
-            "الديون",
-            Icons.money,
-            const DebtsScreen(),
-          ),
-
-
-
-          dashboardCard(
-            context,
-            "المصروفات",
-            Icons.money_off,
-            const ExpensesScreen(),
-          ),
-
-
-
-          dashboardCard(
-            context,
-            "التقارير",
-            Icons.bar_chart,
-            const ReportsScreen(),
-          ),
-
-
-
-          dashboardCard(
-            context,
-            "الإعدادات",
-            Icons.settings,
-            const SettingsScreen(),
-          ),
-
-
-        ],
-
-      ),
 
     );
 
+
   }
+
 
 
 
@@ -137,14 +306,19 @@ class DashboardScreen extends StatelessWidget {
 
       IconData icon,
 
+      Color color,
+
       Widget page,
 
-      ) {
+      ){
+
 
 
     return InkWell(
 
-      onTap: () {
+
+
+      onTap:(){
 
 
         Navigator.push(
@@ -153,7 +327,7 @@ class DashboardScreen extends StatelessWidget {
 
           MaterialPageRoute(
 
-            builder: (context) => page,
+            builder:(context)=>page,
 
           ),
 
@@ -163,42 +337,51 @@ class DashboardScreen extends StatelessWidget {
       },
 
 
-      child: Card(
 
-        elevation: 5,
-
-
-        shape: RoundedRectangleBorder(
-
-          borderRadius:
-          BorderRadius.circular(20),
-
-        ),
+      child:Card(
 
 
+        child:
 
-        child: Column(
+        Column(
 
           mainAxisAlignment:
+
           MainAxisAlignment.center,
 
 
-          children: [
+          children:[
 
 
-            Icon(
 
-              icon,
+            CircleAvatar(
 
-              size: 50,
+              radius:30,
 
-              color: Colors.blue,
+              backgroundColor:
+
+              color.withOpacity(0.15),
+
+
+              child:
+
+              Icon(
+
+                icon,
+
+                size:35,
+
+                color:color,
+
+              ),
 
             ),
 
 
 
-            const SizedBox(height: 15),
+
+            const SizedBox(height:12),
+
 
 
 
@@ -206,24 +389,35 @@ class DashboardScreen extends StatelessWidget {
 
               title,
 
-              style: const TextStyle(
+              style:
 
-                fontSize: 18,
+              const TextStyle(
 
-                fontWeight: FontWeight.bold,
+                fontSize:17,
+
+                fontWeight:
+
+                FontWeight.bold,
 
               ),
 
             ),
 
 
+
           ],
+
 
         ),
 
+
+
       ),
 
+
+
     );
+
 
   }
 

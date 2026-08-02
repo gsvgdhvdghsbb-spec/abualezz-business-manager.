@@ -10,7 +10,6 @@ double amount;
 String date;
 
 
-
 ExpenseModel({
 
 this.id,
@@ -22,7 +21,6 @@ required this.amount,
 required this.date,
 
 });
-
 
 
 Map<String,dynamic> toMap(){

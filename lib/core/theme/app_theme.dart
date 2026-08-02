@@ -1,27 +1,167 @@
-
 import 'package:flutter/material.dart';
 
 
-class AppColors {
+
+class AppTheme {
 
 
-  static const Color primary =
-      Color(0xff0D1B2A);
+  static ThemeData theme = ThemeData(
 
 
-  static const Color secondary =
-      Color(0xff1565C0);
+    useMaterial3: true,
 
 
-  static const Color background =
-      Color(0xffF5F7FA);
+
+    colorScheme: ColorScheme.fromSeed(
+
+      seedColor: Colors.blue,
+
+    ),
 
 
-  static const Color success =
-      Colors.green;
+
+    scaffoldBackgroundColor:
+
+    const Color(0xffF5F7FA),
 
 
-  static const Color danger =
-      Colors.red;
+
+
+
+    appBarTheme:
+
+    const AppBarTheme(
+
+
+      centerTitle: true,
+
+
+      elevation: 0,
+
+
+      backgroundColor:
+
+      Color(0xff0D1B2A),
+
+
+
+      foregroundColor:
+
+      Colors.white,
+
+
+
+    ),
+
+
+
+
+
+
+    cardTheme:
+
+    CardThemeData(
+
+
+      elevation: 5,
+
+
+      shape:
+
+      RoundedRectangleBorder(
+
+        borderRadius:
+
+        BorderRadius.circular(20),
+
+      ),
+
+
+    ),
+
+
+
+
+
+
+    inputDecorationTheme:
+
+
+    InputDecorationTheme(
+
+
+      border:
+
+      OutlineInputBorder(
+
+
+        borderRadius:
+
+        BorderRadius.circular(15),
+
+
+      ),
+
+
+
+      filled:true,
+
+
+      fillColor:
+
+      Colors.white,
+
+
+
+    ),
+
+
+
+
+    elevatedButtonTheme:
+
+
+    ElevatedButtonThemeData(
+
+
+      style:
+
+      ElevatedButton.styleFrom(
+
+
+        minimumSize:
+
+        const Size(
+
+          double.infinity,
+
+          55,
+
+        ),
+
+
+
+        shape:
+
+        RoundedRectangleBorder(
+
+          borderRadius:
+
+          BorderRadius.circular(15),
+
+        ),
+
+
+
+      ),
+
+
+
+    ),
+
+
+
+  );
+
 
 }

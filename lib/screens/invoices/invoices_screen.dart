@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../models/invoice_model.dart';
+import '../../models/invoice_item_model.dart';
+
 import '../../services/invoice_service.dart';
 import '../../services/pdf_service.dart';
 
@@ -38,7 +40,6 @@ class _InvoicesScreenState
 
 
 
-
   @override
   void initState(){
 
@@ -52,7 +53,7 @@ class _InvoicesScreenState
 
 
 
-  void loadInvoices() async{
+  void loadInvoices() async {
 
 
     invoices =
@@ -70,6 +71,39 @@ class _InvoicesScreenState
 
 
 
+  void printInvoice(
+      InvoiceModel invoice
+      ) async {
+
+
+
+    List<InvoiceItemModel> items =
+
+    await service.getInvoiceItems(
+
+      invoice.id!,
+
+    );
+
+
+
+    await pdfService.generateInvoicePdf(
+
+      invoice,
+
+      items,
+
+    );
+
+
+
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context){
 
@@ -77,15 +111,17 @@ class _InvoicesScreenState
     return Scaffold(
 
 
+
       appBar:
 
       AppBar(
 
         title:
-        const Text("الفواتير"),
+        const Text(
+          "الفواتير",
+        ),
 
       ),
-
 
 
 
@@ -101,6 +137,7 @@ class _InvoicesScreenState
 
 
         itemBuilder:(context,index){
+
 
 
           final invoice =
@@ -133,6 +170,7 @@ class _InvoicesScreenState
               Text(
 
                 "الإجمالي: ${invoice.total}\n"
+                    "المدفوع: ${invoice.paid}\n"
                     "المتبقي: ${invoice.remaining}",
 
               ),
@@ -156,20 +194,12 @@ class _InvoicesScreenState
 
 
 
+                onPressed:(){
 
-                onPressed:() async {
-
-
-
-                  await pdfService.generateInvoicePdf(
-
-                    invoice,
-
-                  );
-
-
+                  printInvoice(invoice);
 
                 },
+
 
               ),
 

@@ -1,46 +1,242 @@
 import 'package:flutter/material.dart';
 
-
-class SettingsScreen extends StatelessWidget{
-
-
-const SettingsScreen({super.key});
-
-
-@override
-Widget build(BuildContext context){
-
-
-return Scaffold(
-
-appBar:
-
-AppBar(
-
-title:
-const Text("الإعدادات")
-
-),
+import '../../services/backup_service.dart';
 
 
 
-body:
+class SettingsScreen extends StatefulWidget {
 
-const Center(
 
-child:
+  const SettingsScreen({super.key});
 
-Text(
 
-"إعدادات التطبيق"
-
-)
-
-)
-
-);
+  @override
+  State<SettingsScreen> createState() =>
+      _SettingsScreenState();
 
 
 }
+
+
+
+
+class _SettingsScreenState
+    extends State<SettingsScreen> {
+
+
+  final backupService =
+  BackupService();
+
+
+
+
+  void createBackup() async {
+
+
+    String path =
+    await backupService.createBackup();
+
+
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+
+      SnackBar(
+
+        content:
+
+        Text(
+
+          "تم إنشاء النسخة الاحتياطية:\n$path",
+
+        ),
+
+      ),
+
+    );
+
+
+  }
+
+
+
+
+
+
+  @override
+  Widget build(BuildContext context){
+
+
+    return Scaffold(
+
+
+      appBar:
+
+      AppBar(
+
+        title:
+
+        const Text(
+
+          "الإعدادات",
+
+        ),
+
+      ),
+
+
+
+
+      body:
+
+      Padding(
+
+        padding:
+
+        const EdgeInsets.all(20),
+
+
+
+        child:
+
+        Column(
+
+          children:[
+
+
+
+
+            Card(
+
+              child:
+
+              ListTile(
+
+
+                leading:
+
+                const Icon(
+
+                  Icons.backup,
+
+                ),
+
+
+
+                title:
+
+                const Text(
+
+                  "إنشاء نسخة احتياطية",
+
+                ),
+
+
+
+
+                subtitle:
+
+                const Text(
+
+                  "حفظ جميع بيانات التطبيق",
+
+                ),
+
+
+
+                onTap:
+
+                createBackup,
+
+
+              ),
+
+            ),
+
+
+
+
+            Card(
+
+              child:
+
+              ListTile(
+
+
+                leading:
+
+                const Icon(
+
+                  Icons.restore,
+
+                ),
+
+
+
+                title:
+
+                const Text(
+
+                  "استعادة البيانات",
+
+                ),
+
+
+
+                subtitle:
+
+                const Text(
+
+                  "استرجاع نسخة محفوظة",
+
+                ),
+
+
+
+                onTap:(){
+
+
+
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(
+
+                    const SnackBar(
+
+                      content:
+
+                      Text(
+
+                        "سيتم اختيار ملف النسخة لاحقاً",
+
+                      ),
+
+                    ),
+
+                  );
+
+
+                },
+
+
+              ),
+
+            ),
+
+
+
+          ],
+
+
+        ),
+
+
+      ),
+
+
+    );
+
+
+  }
+
 
 }

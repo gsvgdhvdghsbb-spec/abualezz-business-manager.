@@ -5,139 +5,163 @@ import 'package:path/path.dart';
 class DatabaseHelper {
 
 
-static Database? _database;
+  static Database? _database;
 
 
 
-Future<Database> get database async {
+  Future<Database> get database async {
 
-if(_database != null){
+    if (_database != null) {
+      return _database!;
+    }
 
-return _database!;
 
-}
+    _database = await initDatabase();
 
+    return _database!;
 
-_database = await initDatabase();
+  }
 
-return _database!;
 
-}
 
 
 
-Future<Database> initDatabase() async {
+  Future<Database> initDatabase() async {
 
 
-String path = join(
+    String path = join(
 
-await getDatabasesPath(),
+      await getDatabasesPath(),
 
-"abu_al_ezz.db"
+      "abu_al_ezz.db",
 
-);
+    );
 
 
 
-return await openDatabase(
+    return await openDatabase(
 
-path,
+      path,
 
-version:1,
+      version: 2,
 
 
-onCreate:(db,version) async {
 
+      onCreate: (db, version) async {
 
 
-await db.execute('''
 
-CREATE TABLE customers(
+        await db.execute('''
 
-id INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE customers(
 
-name TEXT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-phone TEXT,
+        name TEXT,
 
-debt REAL
+        phone TEXT,
 
-)
+        debt REAL
 
-''');
+        )
 
+        ''');
 
 
 
-await db.execute('''
 
-CREATE TABLE products(
+        await db.execute('''
 
-id INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE products(
 
-name TEXT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-price REAL,
+        name TEXT,
 
-quantity INTEGER
+        price REAL,
 
-)
+        quantity INTEGER
 
-''');
+        )
 
+        ''');
 
 
 
 
-await db.execute('''
 
-CREATE TABLE invoices(
+        await db.execute('''
 
-id INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE invoices(
 
-customer TEXT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-total REAL,
+        customer TEXT,
 
-paid REAL,
+        total REAL,
 
-remaining REAL,
+        paid REAL,
 
-date TEXT
+        remaining REAL,
 
-)
+        date TEXT
 
-''');
+        )
 
+        ''');
 
 
 
 
-await db.execute('''
 
-CREATE TABLE expenses(
+        await db.execute('''
 
-id INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE expenses(
 
-title TEXT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-amount REAL,
+        title TEXT,
 
-date TEXT
+        amount REAL,
 
-)
+        date TEXT
 
-''');
+        )
 
+        ''');
 
 
-},
 
 
-);
 
+        await db.execute('''
 
-}
+        CREATE TABLE debts(
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        customerName TEXT,
+
+        amount REAL,
+
+        paid REAL,
+
+        remaining REAL,
+
+        date TEXT
+
+        )
+
+        ''');
+
+
+
+      },
+
+    );
+
+
+  }
 
 
 }

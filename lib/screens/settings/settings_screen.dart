@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../services/backup_service.dart';
+import '../users/users_screen.dart';
 
 
 
 class SettingsScreen extends StatefulWidget {
-
 
   const SettingsScreen({super.key});
 
@@ -13,7 +13,6 @@ class SettingsScreen extends StatefulWidget {
   @override
   State<SettingsScreen> createState() =>
       _SettingsScreenState();
-
 
 }
 
@@ -26,6 +25,7 @@ class _SettingsScreenState
 
   final backupService =
   BackupService();
+
 
 
 
@@ -87,6 +87,7 @@ class _SettingsScreenState
 
 
 
+
       body:
 
       Padding(
@@ -105,13 +106,78 @@ class _SettingsScreenState
 
 
 
-
             Card(
 
               child:
 
               ListTile(
 
+                leading:
+
+                const Icon(
+
+                  Icons.people,
+
+                ),
+
+
+
+                title:
+
+                const Text(
+
+                  "إدارة المستخدمين",
+
+                ),
+
+
+
+                subtitle:
+
+                const Text(
+
+                  "إضافة الموظفين وتحديد الصلاحيات",
+
+                ),
+
+
+
+
+                onTap:(){
+
+
+
+                  Navigator.push(
+
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder:(context)=>
+
+                      const UsersScreen(),
+
+                    ),
+
+                  );
+
+
+
+                },
+
+              ),
+
+            ),
+
+
+
+
+
+            Card(
+
+              child:
+
+              ListTile(
 
                 leading:
 
@@ -148,10 +214,10 @@ class _SettingsScreenState
 
                 createBackup,
 
-
               ),
 
             ),
+
 
 
 
@@ -161,7 +227,6 @@ class _SettingsScreenState
               child:
 
               ListTile(
-
 
                 leading:
 
@@ -206,7 +271,7 @@ class _SettingsScreenState
 
                       Text(
 
-                        "سيتم اختيار ملف النسخة لاحقاً",
+                        "سيتم إضافة اختيار الملف لاحقًا",
 
                       ),
 
@@ -215,10 +280,13 @@ class _SettingsScreenState
                   );
 
 
+
                 },
 
 
               ),
+
+
 
             ),
 

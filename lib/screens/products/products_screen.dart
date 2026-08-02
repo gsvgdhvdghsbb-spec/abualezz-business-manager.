@@ -5,262 +5,350 @@ import '../../services/product_service.dart';
 
 
 
-class ProductsScreen extends StatefulWidget{
+class ProductsScreen extends StatefulWidget {
 
-const ProductsScreen({super.key});
-
-
-@override
-State<ProductsScreen> createState()
-=> _ProductsScreenState();
-
-}
+  const ProductsScreen({super.key});
 
 
-
-class _ProductsScreenState
-extends State<ProductsScreen>{
-
-
-final service = ProductService();
-
-
-List<ProductModel> products=[];
-
-
-final name =
-TextEditingController();
-
-
-final price =
-TextEditingController();
-
-
-final quantity =
-TextEditingController();
-
-
-
-@override
-void initState(){
-
-super.initState();
-
-load();
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
 
 }
 
 
 
-void load() async{
+class _ProductsScreenState extends State<ProductsScreen> {
 
-products =
-await service.getProducts();
 
-setState((){});
+  final service = ProductService();
 
-}
 
+  List<ProductModel> products = [];
 
 
-void save() async{
 
+  final nameController =
+      TextEditingController();
 
-await service.addProduct(
 
-ProductModel(
+  final priceController =
+      TextEditingController();
 
-name:name.text,
 
-price:double.parse(price.text),
+  final quantityController =
+      TextEditingController();
 
-quantity:int.parse(quantity.text),
 
-)
 
-);
 
+  @override
+  void initState() {
 
-name.clear();
+    super.initState();
 
-price.clear();
+    loadProducts();
 
-quantity.clear();
+  }
 
 
-load();
 
 
-}
 
+  void loadProducts() async {
 
 
-@override
-Widget build(BuildContext context){
+    products =
+        await service.getProducts();
 
 
-return Scaffold(
+    setState(() {});
 
-appBar:AppBar(
-title:
-const Text("المستودع"),
-),
+  }
 
 
-floatingActionButton:
-FloatingActionButton(
 
-child:
-const Icon(Icons.add),
 
-onPressed:(){
 
+  void addProduct() async {
 
-showDialog(
 
-context:context,
+    await service.addProduct(
 
-builder:(context){
+      ProductModel(
 
-return AlertDialog(
+        name: nameController.text,
 
-title:
-const Text("منتج جديد"),
+        price:
+        double.parse(priceController.text),
 
+        quantity:
+        int.parse(quantityController.text),
 
-content:
-Column(
+      ),
 
-mainAxisSize:
-MainAxisSize.min,
+    );
 
-children:[
 
 
-TextField(
-controller:name,
-decoration:
-const InputDecoration(
-labelText:"اسم المنتج"
-),
-),
+    nameController.clear();
 
+    priceController.clear();
 
-TextField(
-controller:price,
-decoration:
-const InputDecoration(
-labelText:"السعر"
-),
-),
+    quantityController.clear();
 
 
-TextField(
-controller:quantity,
-decoration:
-const InputDecoration(
-labelText:"الكمية"
-),
-),
 
+    loadProducts();
 
-],
 
-),
+  }
 
 
-actions:[
 
-TextButton(
 
-onPressed:(){
 
-save();
+  void showAddDialog(){
 
-Navigator.pop(context);
 
-},
+    showDialog(
 
-child:
-const Text("حفظ"),
+      context: context,
 
-)
+      builder:(context){
 
-],
 
-);
+        return AlertDialog(
 
 
-}
+          title:
+          const Text("إضافة منتج"),
 
-);
 
 
-},
+          content:
 
-),
+          Column(
 
+            mainAxisSize:
+            MainAxisSize.min,
 
 
-body:
+            children:[
 
-ListView.builder(
 
-itemCount:
-products.length,
+              TextField(
 
-itemBuilder:(context,index){
+                controller:nameController,
 
+                decoration:
+                const InputDecoration(
 
-final p =
-products[index];
+                  labelText:"اسم المنتج"
 
+                ),
 
-return Card(
+              ),
 
-child:ListTile(
 
-title:
-Text(p.name),
 
+              TextField(
 
-subtitle:
-Text(
-"السعر: ${p.price} | الكمية: ${p.quantity}"
-),
+                controller:priceController,
 
+                keyboardType:
+                TextInputType.number,
 
-trailing:
-IconButton(
+                decoration:
+                const InputDecoration(
 
-icon:
-const Icon(Icons.delete),
+                    labelText:"السعر"
 
-onPressed:(){
+                ),
 
-service.deleteProduct(p.id!);
+              ),
 
-load();
 
-},
 
-),
+              TextField(
 
+                controller:quantityController,
 
-),
+                keyboardType:
+                TextInputType.number,
 
-);
+                decoration:
+                const InputDecoration(
 
+                    labelText:"الكمية"
 
-},
+                ),
 
+              ),
 
-),
 
 
-);
+            ],
 
+          ),
 
-}
+
+
+          actions:[
+
+
+            ElevatedButton(
+
+              onPressed:(){
+
+
+                addProduct();
+
+
+                Navigator.pop(context);
+
+
+              },
+
+
+              child:
+              const Text("حفظ"),
+
+
+            )
+
+
+          ],
+
+
+
+        );
+
+
+      },
+
+    );
+
+
+  }
+
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Scaffold(
+
+
+      appBar:
+      AppBar(
+
+        title:
+        const Text("المستودع"),
+
+      ),
+
+
+
+      floatingActionButton:
+
+      FloatingActionButton(
+
+        onPressed:
+        showAddDialog,
+
+        child:
+        const Icon(Icons.add),
+
+      ),
+
+
+
+
+      body:
+
+      ListView.builder(
+
+
+        itemCount:
+        products.length,
+
+
+        itemBuilder:(context,index){
+
+
+          final product =
+          products[index];
+
+
+
+          return Card(
+
+
+            child:
+            ListTile(
+
+
+              title:
+              Text(product.name),
+
+
+
+              subtitle:
+              Text(
+
+                "السعر: ${product.price} | الكمية: ${product.quantity}",
+
+              ),
+
+
+
+              trailing:
+
+              IconButton(
+
+                icon:
+                const Icon(Icons.delete),
+
+
+                onPressed:() async {
+
+
+                  await service.deleteProduct(
+
+                      product.id!
+
+                  );
+
+
+                  loadProducts();
+
+
+                },
+
+
+              ),
+
+
+
+            ),
+
+
+          );
+
+
+        },
+
+
+      ),
+
+
+    );
+
+
+  }
+
 
 }
